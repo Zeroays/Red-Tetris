@@ -7,22 +7,29 @@ function App() {
       <h1>Red Tetris</h1>
       <div className="game-container">
         <div className="tetris-grid">
-          <PlayerGrid row="20" column="10"/>
+          <PlayerGrid />
         </div>
         <div className="tetris-grid">
-          <PlayerGrid row="20" column="10"/>
+          <PlayerGrid />
         </div>
       </div>
     </div>
   );
 }
 
-
-
-const PlayerGrid = ({ row, column }) => {
-  const color = "black";
-  const [ grid, setGrid ] = useState(initTetrisGrid( row, column, color ));
+const PlayerGrid = () => {
+  const [ grid, setGrid ] = useState(INITIAL_PLAYER_STATE().grid);
   return renderGrid(grid);
+}
+
+const INITIAL_PLAYER_STATE = () => {
+  const [ row, col, color ] = [ 20, 10, "black" ];
+  return {
+    row,
+    col,
+    color,
+    grid: initTetrisGrid( row, col, color )
+  }
 }
 
 const initTetrisGrid = ( row, column, color ) => {
@@ -31,35 +38,24 @@ const initTetrisGrid = ( row, column, color ) => {
 }
 
 const renderGrid = grid => {
+  return grid.map( renderRows );
+}
+
+const renderRows = (row, rIdx) => {
   return (
-    grid.map((row, rIdx) =>
-      <div className="tetris-row" key={`r${rIdx}`}>
-        {row.map((cellColor, cIdx) =>
-          <Cell key={`r${rIdx}c${cIdx}`} color={cellColor}/>
-        )}
-      </div>
-    )
-  )
+    <div className="tetris-row" key={`r${rIdx}`}>
+        { row.map( renderCells ) }
+    </div>
+  );
 }
 
-const renderRows = render
+const renderCells = (cellColor, cIdx) => {
+  return <Cell key={`c${cIdx}`} color={cellColor}/>
+}
 
-// const Row = ({cellAmount}) => {
-//     let row = [];
-//     for (let i = 0; i < cellAmount; i++)
-//       row.push(<Cell />);
-//     return row;
-// }
-
-const Cell = ({color}) => {
+const Cell = ( { color } ) => {
   let cellStyle = { backgroundColor: color }
-  return (<div className="tetris-cell" style={cellStyle}></div>);
+  return <div className="tetris-cell" style={cellStyle}></div>
 }
-
-// window.addEventListener('keydown', e => {
-//   switch(e.key) {
-//     case 
-//   }
-// })
 
 export default App;
