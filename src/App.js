@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
@@ -17,8 +17,20 @@ function App() {
   );
 }
 
+const colorFirstCell = (grid) => {
+  grid[0][0] = "green";
+  grid[0][1] = "blue";
+  return grid;
+}
+
 const PlayerGrid = () => {
   const [ grid, setGrid ] = useState(INITIAL_PLAYER_STATE().grid);
+  // setTimeout(setGrid(colorFirstCell(grid)), 2000);
+  console.log(grid);
+  useEffect(() => {
+      setGrid(colorFirstCell(grid));
+  }, []);
+
   return renderGrid(grid);
 }
 
@@ -34,7 +46,7 @@ const INITIAL_PLAYER_STATE = () => {
 
 const initTetrisGrid = ( row, column, color ) => {
   const singleRow = Array(+column).fill(color);
-  return Array(+row).fill(singleRow);
+  return Array.from({ length: row }, () => [...singleRow]);
 }
 
 const renderGrid = grid => {
