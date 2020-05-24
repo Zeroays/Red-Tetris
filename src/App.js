@@ -1,5 +1,5 @@
 import React from 'react';
-import PlayerGrid from './Grid.js';
+import Game from './Grid.js';
 
 import './App.css';
 
@@ -8,12 +8,7 @@ function App() {
     <div className="App">
       <h1>Red Tetris</h1>
       <div className="game-container">
-        <div className="tetris-grid">
-          <PlayerGrid />
-        </div>
-        <div className="tetris-grid">
-          <PlayerGrid />
-        </div>
+        <Game />
       </div>
     </div>
   );
